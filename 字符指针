@@ -1,0 +1,73 @@
+一、字符指针
+
+试观察一下代码，给出运行结果预测
+
+#include <stdio.h>
+
+int main()
+{
+  char arr[]="abcdef"
+  char* p=arr;
+  printf("%s\n",arr);
+  printf("%s\n",p);
+  return 0;
+}
+
+//运行结果：
+
+abcdef
+abcdef
+//结果分析
+
+arr 为字符数组的首地址，实际上是作为整个数组的首地址，而不简单的理解为a[0]的地址，因为虽然数值上是相等的，但是在对&arr操作和对arr操作则完全不同，前者对单个字符操作，后者对整个数组操作
+char* p 存储的是arr数组的首地址，因此存储的是整个数组。
+
+//字符串常量一些注意的点：
+
+>一般来说字符串常量是不能随便更改的，观察以下代码判断输出情况
+
+#include <stdio.h>
+
+int main()
+{
+  char arr1[]="abcdef";
+  char arr2[]="abcdef";
+  char* p1="abcdef";
+  char* p2="abcdef";
+  
+  if(arr1==arr2)
+  {
+    printf("arr1=arr2\n");
+  }else
+  {
+    printf("arr1!=arr2\n");
+  }
+  if(p1==p2)
+  {
+    printf("p1=p2\n");
+  }else
+  {
+    printf("P1!=p2\n");
+  }
+
+  return 0;
+}
+
+//运行结果：
+arr1!=arr2
+p1=p2
+
+//结果分析：
+
+对于arr1!=arr2:
+因为本质上是开辟了两块独立的内存空间，两个地址是不等的。因此实际上 arr1[]数组和arr2[]数组本质上没有关系的。
+
+对于p1=p2
+因为用指针来存储"abcdef"这个字符串时，本质上是作为一个字符串常量来存储的，字符串常量往往不能被更改的，因此用一个内存来存储这个字符串常量
+
+实际上如果尝试以下操作，编译器会报错的
+// *p="aaaaa";
+所以一般会更倾向于把 char*p="abcdef"  写成 const char *p="abcdef"
+
+
+
