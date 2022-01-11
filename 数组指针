@@ -1,0 +1,47 @@
+先尝试给出指针形参的输出函数
+
+#include <stdio.h>
+
+void print1(int arr[][5],int x ,int y)//pragram
+{
+  int i=0;
+  for(i=0;i<x;++i)
+  {
+    int j=0;
+    for(j=0;j<y;++j)
+    {
+      printf("%d ",arr[i][j]);
+    }
+    printf("\n");
+  }
+
+}
+
+void print2(int (*p)[5],int x, int y)
+{
+	int i=0;
+	for(i=0;i<x;++i)
+	{
+		int j=0;
+		for(j=0;j<y;++j)
+		{
+			printf("%d ",(*(p+i))[j]);//(*(p+i))==arr[i]  --> (*(p+i))[j]==arr[i][j]
+      //printf("%d ",p[i][j]);
+		}
+		printf("\n");
+	}
+}
+
+//我们常见的取数组元素arr[0]、arr[1]...实际上 可以等价着看 把arr当做数组首元素，例如arr[0]等价于*arr+0 ，arr[1]等价于 *arr+1 arr[i]等价于*arr+i 
+int main()
+{
+  int arr[3][5]={{1,2,3,4,5},{2,3,4,5,6},{3,4,5,6,7}};
+  print1(arr,3,5);
+  return 0;
+}
+
+通过上述方式都能够输出一个二维数组，但是由于C语言的传参的时候可以理解为是复制一份实参给形参，本质上两者相互独立。这样会带来两个问题：
+1）传递参数需要较大的额外空间
+2）改变形参并不能改变实参，因为两者是独立的
+
+要解决上述问题，可以利用指针作为形参。
