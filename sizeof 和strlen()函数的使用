@@ -1,0 +1,112 @@
+
+
+> sizeof
+
+值得注意的是sizeof 并不是函数，而是一个操作符关键字，用于返回对象的在内存中被分配的字节数。所处理的对象可以是 变量、常量、类型 等。并且同一种类型在不同操作系统环境下返回的值未必相同 例如:
+
+int a=0;
+
+在32位系统中 :
+
+sizeof(&a)的返回结果为4，因为地址占4个字节
+
+在64位系统中
+
+sizeof(&a)的返回结果为8，因为地址占8个字节
+
+
+> strlen()
+
+strlen（）是地地道道的库函数了，在头文件 string.h中
+来看看库函数声明：
+
+```c
+> size_t  strlen(const char *str)
+```
+
+size_t  是用typedef 定义的别名，定义别名语句如下：
+
+```c
+typedef unsigned long size_t;
+```
+意味着strlen(const char* str)返回值是无符号长整型，来表示字符串长度。
+
+函数参数是待处理的字符串指针常量，这里面就要注意strlen 函数处理的参数应该是一个地址。
+
+本质上两者压根没有什么联系，只不过在处理字符数组的时候容易弄混淆
+
+观察以下代码，思考一下再看答案
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+	char a[]={'a','b','c','d','e'};
+	char b[5]={'a','b','c','d','e'};
+	char c[]="abcde";
+	char d[5]="abcde";
+	char *e="abcde";
+
+	printf("char a[] 中元素个数：%d\n",sizeof(a)/sizeof(a[0]));
+	printf("char b[5]中元素个数：%d\n",sizeof(b)/sizeof(b[0]));
+	printf("c[]中元素个数：%d\n",sizeof(c)/sizeof(c[0]));
+	printf("d[5]=中元素个数：%d\n",sizeof(d)/sizeof(d[0]));
+	printf("%d\n",sizeof(c));
+	printf("+++++++++++++++++++++++\n");
+	printf(" a[] 中元素个数：%d\n",strlen(a));
+	printf(" b[5] 中元素个数：%d\n",strlen(b));
+	printf("c[]中元素个数：%d\n",strlen(c));
+	printf("d[5]=中元素个数：%d\n",strlen(d));
+	printf("e所指元素 %d\n",strlen(e));
+
+	return 0;
+}
+```
+运行结果为：
+
+char a[] 中元素个数：5
+char b[5]中元素个数：5
+c[]中元素个数：6
+d[5]=中元素个数：5
+6
++++++++++++++++++++++++
+ a[] 中元素个数：11
+ b[5] 中元素个数：19
+c[]中元素个数：5
+d[5]=中元素个数：13
+e所指元素 5
+Press any key to continue
+
+
+
+1）当字符数组不一一赋值且不明确指定字符个数时，会默认在字符数组中存入一个 '\0'
+	
+	例如上述的语句：
+	char c[]="abcde";
+	//字符数组c中 保存的是 'a','b','c','d','e','\0'  共6个元素
+	
+	
+2）当字符数组不一一赋值且明确指定字符个数时，不会在字符数组中存入\0
+	
+	例如上述的语句：
+	char d[5]="abcde";
+	//字符数组d中保存的是'a','b','c','d','e' 共5个元素
+
+3）strlen() 函数简要作用原理
+	
+	strlen() 函数的工作原理是以传入的指针为起点开始依次对字符串字符计数，
+	遇到'\0'的时候结束（'\0'不计入字符个数，只作为结束标志字符）。
+	当字符串没有'\0'结束标志符的时候，strlen（）会继续计数，因此会返回随机值。
+	比如上述的：
+	
+
+```c
+char a[]={'a','b','c','d','e'};//一一赋值，字符数组a中没有'\0'
+char b[5]={'a','b','c','d','e'};//一一赋值，字符数组b中没有'\0'
+char d[5]="abcde"；//不一一赋值，但指定了字符个数，字符数组b中没有'\0'
+
+```
+
+因此 strlen(a)、strlen(b)、strlen(d)返回的都是随机值。
