@@ -1,0 +1,68 @@
+
+算法设计
+
+
+算法分析：
+
+由于链表中的元素是有序的，因此重复元素必然是相邻的。可以定义两个指针pre、p一后一前遍历链表，当前面的指针所指结点值与后一个指针所指结点值相等时说明有重复元素，删除p然后在让p指向pre->next即可
+
+算法实现：
+
+```c
+//函数名称：Delete_LinkList_Same
+//函数参数：链表指针
+//函数返回值：void
+//函数功能：删除链表中多余的重复元素，使得链表中各结点data不等。
+void Delete_LinkList_Same(LinkList L)
+{
+	LNode*	pre=L->next;
+	LNode*  p=pre->next;
+	while(p)
+	{
+		if(pre->data!=p->data)
+		{
+			pre=p;
+			p=p->next;
+		}
+		else
+		{
+			pre->next=p->next;
+			free(p);
+			p=pre->next;
+		}
+	}
+}
+```
+>3）建立main.c文件测试算法
+```c
+/****main.c****/
+#include "LinkList.h"
+int main()
+{
+	LinkList L=Creat_LinkList_TailInsert();
+	Delete_LinkList_Same(L);
+	ShowList(L);
+	printf("最终链表长度为：%d\n",ListLength(L));
+	return 0;
+}
+```
+输入链表元素依次为：1 、2、 2、 2、 3、 4、 4、 4、 4 、67、 67、 9
+
+运行结果如下
+
+1
+2
+2
+2
+3
+4
+4
+4
+4
+67
+67
+9
+-1
+1->2->3->4->67->9
+链表长度为：6
+Press any key to continue
