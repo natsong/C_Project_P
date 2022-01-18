@@ -1,0 +1,41 @@
+
+void Reverse(int a[],int len)
+{
+  int temp=0;
+  int i=0;
+  for(i=0;i<len/2;i++)
+  {
+    temp=a[i];
+    a[i]=a[len-i-1];
+    a[len-i-1]=temp;
+  }
+}
+
+
+#include <stdio.h>
+
+
+void Reverse(int a[],int len)
+{
+  int temp=0;
+  int i=0;
+  for(i=0;i<len/2;i++)
+  {
+    temp=a[i];
+    a[i]=a[len-i-1];
+    a[len-i-1]=temp;
+  }
+}
+
+int main()
+{
+  int i=0;
+	int a[]={1,2,3,4,5};
+	int len=sizeof(a)/sizeof(a[0]);
+	Reverse(a,len);
+	for(i=0;i<len;++i)
+	{
+		printf("%d\t",a[i]);
+	}
+  return 0;
+}
