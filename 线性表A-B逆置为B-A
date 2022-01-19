@@ -1,0 +1,95 @@
+【算法4】
+>一维数组A[m+n]中存有两线性表（a1,a2...am）,(b1,b2...bn)。试编写程序实现a和b两个线性表的逆置，即（b1,b2...bn）(a1,a2...am)顺序排列。
+
+>算法分析
+
+原序列：a1,a2,a3...am,b1,b2,b3..bn
+作用后序列：b1,b2,b3...bn,a1,a2,a3...am
+
+操作如下：
+1）a1,a2,a3...am  逆置为  am,am-1,am-2,...a1
+2）b1,b2,b3...bn 逆置为 bn,bn-1,bn-2,...b1
+
+经过操作1）、2）,整个序列呈现如下排序：
+am,am-1,am-2,...a1,bn,bn-1,bn-2,...b1
+3)将整个序列逆置序列呈现如下排序
+b1,b2...bn,a1,a2...am
+
+经过操作1)、2）、3）实现了算法需求。
+
+
+>逆置算法设计
+
+
+```c
+//交换函数
+void swap(int* a,int* b)
+{
+	int temp=0;
+	temp=(*a);
+	(*a)=(*b);
+	(*b)=temp;
+}
+
+void Reverse(int a[],int low,int high)
+{
+	if(low<high)
+	{
+		swap(&a[low],&a[high]);
+		Reverse(a,low+1,high-1);
+	}
+}
+```
+
+具体代码如下：
+
+```c
+#include <stdio.h>
+
+void swap(int* a,int* b)
+{
+	int temp=0;
+	temp=(*a);
+	(*a)=(*b);
+	(*b)=temp;
+}
+
+void Reverse(int a[],int low,int high)
+{
+	if(low<high)
+	{
+		swap(&a[low],&a[high]);
+		Reverse(a,low+1,high-1);
+	}
+}
+
+
+int main()
+{
+	int i=0;
+	//其中1,2,3,4,5,6 为a线性表，7,8,9,10为b线性表
+	int A[10]={1,2,3,4,5,6,7,8,9,10};
+	for(i=0;i<10;i++)
+	{
+		printf("%d\t",A[i]);
+	}
+	printf("\n");
+	Reverse(A,0,5);
+	Reverse(A,6,9);
+	Reverse(A,0,9);
+	for(i=0;i<10;i++)
+	{
+		printf("%d\t",A[i]);
+	}
+	printf("\n");
+	return 0;
+}
+```
+
+运行结果如下：
+
+1       2       3       4       5       6       7       8       9       10
+7       8       9       10      1       2       3       4       5       6
+Press any key to continue
+
+
