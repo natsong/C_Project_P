@@ -1,0 +1,190 @@
+//函数名称：Delete_X
+//函数功能：删除顺序表（顺序存储）中值为x的元素
+//函数参数：a[]:待处理数组（顺序表），x:选择删除顺序表中值为x的元素，len:数组（顺序表）长
+void Delete_X(int a[],int x,int len)
+{
+	int k=0;//用于记录i从a[i]!=x到下一个a[i]!=x之间有多少个值为x的元素
+	int i=0;
+	while(i<len)
+	{
+		if(a[i]==x)
+		{
+			k++;i++;
+		}
+		else
+		{
+			a[i-k]=a[i];//用a[i]上的元素左移k个单位覆盖掉值为x的元素
+			i++;
+		}
+	}
+	memset(a+len-k,0,sizeof(a[0])*k);//将最后一个非x元素之后的元素置空
+	//也可以使用相对简单的清空方式：
+	/*for(i=0;i<k;i++)
+	{
+		a[len-k+i]=0;
+	}*/
+}
+
+
+
+整体代码实现：
+
+#include <stdio.h>
+#include <string.h>
+
+
+void Delete_x(int a[],int x,int len)
+{
+	int i=0;//定义i用于控制遍历顺序表a
+	int k=0;//用于记录值为x元素个数，方便移动
+	while(i<len)
+	{
+		if(a[i]==x)
+		{
+			k++;
+			i++;
+		}
+		else
+		{
+			a[i-k]=a[i];//将a[i]往前移动k个位置
+			i++;
+		}
+	}
+	
+	memset(a+len-k,0,sizeof(a[0])*k);
+	/*for(i=0;i<k;i++)
+	{
+		a[len-k+i]=0;
+	}*/
+
+}
+
+
+int main()
+{
+	int a[]={1,2,3,4,4,6,4,5};
+	int len=sizeof(a)/sizeof(a[0]);//求表长
+	int i=0;
+	//查看作用前元素值
+	for(i=0;i<len;++i)
+	{
+		printf("%d\t",a[i]);
+	}
+	printf("\n");
+	Delete_x(a,4,len);//假设要删除元素值为4的结点
+	//查看作用后元素值
+	for(i=0;i<len;++i)
+	{
+		printf("%d\t",a[i]);
+	}
+	printf("\n");
+	return 0;
+}
+
+
+运行结果：
+
+1       2       3       4       4       6       4       5
+1       2       3       6       5       0       0       0
+Press any key to continue
+
+
+2）相对好理解的方法
+
+》算法思想：
+
+    假设 表中存取的元素分别为 1,2,3,x,x,6,x,5
+    可以定义一个int i 来遍历整个顺序表，定义一个int k来保存元素值不是x 的元素
+    遍历后留下的长度为k的表即为有效表，后面的直接置空就好了。
+
+》算法设计如下：
+
+void Delete_X(int a[],int x,int len)
+{
+	int i=0;//用来遍历顺序表
+	int k=0;//用来保存元素值非x的元素
+	for(i=0;i<len;++i)
+	{
+		if(a[i]!=x)
+		{
+			a[k}=a[i];
+			k++;
+		}
+  }
+  memset(a+k,0,sizeof(a[0])*(len-k));
+}
+
+ 
+实现代码：
+
+#include <stdio.h>
+#include <string.h>
+
+
+/*void Delete_x(int a[],int x,int len)
+{
+	int i=0;//定义i用于控制遍历顺序表a
+	int k=0;//用于记录值为x元素个数，方便移动
+	while(i<len)
+	{
+		if(a[i]==x)
+		{
+			k++;
+			i++;
+		}
+		else
+		{
+			a[i-k]=a[i];//将a[i]往前移动k个位置
+			i++;
+		}
+	}
+	
+	//memset(a+len-k,0,sizeof(a[0])*k);
+	for(i=0;i<k;i++)
+	{
+		a[len-k+i]=0;
+	}
+
+}*/
+
+
+void Delete_X(int a[],int x,int len)
+{
+	int i=0;//用来遍历顺序表
+	int k=0;//用来保存元素值非x的元素
+	for(i=0;i<len;++i)
+	{
+		if(a[i]!=x)
+		{
+			a[k]=a[i];
+			k++;
+		}
+  }
+  memset(a+k,0,sizeof(a[0])*(len-k));
+}
+
+int main()
+{
+	int a[]={1,2,3,4,4,6,4,5};
+	int len=sizeof(a)/sizeof(a[0]);
+	int i=0;
+	for(i=0;i<len;++i)
+	{
+		printf("%d\t",a[i]);
+	}
+	printf("\n");
+	Delete_X(a,4,len);//X大写
+	for(i=0;i<len;++i)
+	{
+		printf("%d\t",a[i]);
+	}
+	printf("\n");
+	return 0;
+}
+
+运行结果：
+
+1       2       3       4       4       6       4       5
+1       2       3       6       5       0       0       0
+Press any key to continue
+
