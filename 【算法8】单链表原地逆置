@@ -1,0 +1,21 @@
+
+1）算法1：利用头插法使元素逆置
+
+
+算法设计：
+
+	
+void Reverse_List(LinkList L)
+{
+	LNode* r=L;
+	LNode* p=L->next;
+	L->next=NULL;//记得把头指针置空
+	while(p)
+	{
+		r=p->next;
+		p->next=L->next;
+		L->next=p;
+		p=r;
+	}
+
+}
