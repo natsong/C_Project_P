@@ -1,0 +1,109 @@
+
+>方法一：利用头插法实现链表的逆置
+
+>算法思想
+
+1）定义两个LNode* 指针p 和r
+
+==LNode* p==: 用于遍历整个单链表
+==LNode* r==:指向p的后继结点防止断链
+
+2）将p标记第一个结点，r标记p所指结点后继
+
+3）依次将后续结点头插法插入头结点后
+
+>算法设计如下
+
+
+
+```c
+//头插法原地逆置单链表
+void Reverse_List(LinkList L)
+{
+	LNode* r=L;
+	LNode* p=L->next;
+	L->next=NULL;//记得把头指针next域置空，否则会循环指首结点
+	while(p)
+	{
+		r=p->next;
+		p->next=L->next;
+		L->next=p;
+		p=r;
+	}
+}
+
+```
+>方法二：
+>改变单链表的指针来逆置单链表
+>利用pre、p、r三个指针来连续改变结点指针让本该指向后继的指针指向结点的前驱。
+可以采用如下初始化：
+LNode* pre=L;
+LNode* p=pre->next;
+LNode* r=p->next;
+
+>（注意）这个初始化方法需要考虑到排除r为空的情况
+
+
+>算法设计如下：
+
+```c
+void Reverse_List2(LinkList L)
+
+{
+	if(L->next)
+	{//当传入链表非空时
+		LNode* pre=L;
+		LNode* p=pre->next;
+		LNode* r=p->next;
+
+		if(r)//链表中不止一个元素的时候，也即r不为空的时候
+		{
+
+			while(r)
+			{
+				p->next=pre;
+				pre=p;
+				p=r;
+				r=r->next;
+			}
+	//由于上面while代码块处理完后链表中还有最后一个结点没有处理
+			L->next->next=NULL;//头结点的next置空
+			p->next=pre;//处理最后一个结点
+			L->next=p;//让头结点指向链表最后一个结点
+		}//如果链表中只有一个元素则什么也不做
+	}
+	else
+		printf("所输入链表为空\n");
+}
+```
+
+
+>main.c代码实现
+
+
+```c
+int main()
+{
+	LinkList L=Creat_LinkList();
+	ShowList(L);
+	Reverse_List2(L);
+	ShowList(L);
+	return 0;
+}
+```
+
+
+>运行结果如下：
+
+1——当链表为空时：
+
+![传入链表为空](https://img-blog.csdnimg.cn/c6c2a19ee4704578a0f87ef714506461.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5bWp5oCh5YS_,size_20,color_FFFFFF,t_70,g_se,x_16)2——传入链表只有一个结点的时候什么也不做
+
+
+![链表只有一个结点情况](https://img-blog.csdnimg.cn/70b211e81a514901842c4cbb3cc3354d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5bWp5oCh5YS_,size_20,color_FFFFFF,t_70,g_se,x_16)3——传入链表不止一个元素
+
+
+![传入链表不止含有一个结点](https://img-blog.csdnimg.cn/1431343d3d5949829671a07bb8f820b2.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5bWp5oCh5YS_,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+写完这个方法可以像ShowList(）等方法一样放到LinkList.h头文件中，下次直接用就好 了。
+:)
