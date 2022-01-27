@@ -180,8 +180,16 @@ void ShowList(LinkList L)
 		}
 	printf("\n");
 }
+//***********************************************************************************//
+//*************************以下为链表相关的方法***************************************//
+//目前有：
+//1.删除链表中重复值
+//2.将两个有序链表合并成一个新的有序链表
+//3.删除链表中的最小值（假设最小值唯一）
+//4.原地使得链表逆置（头插法||改变指针）
 
-//删除有序链表中重复的元素，使得各元素互异
+
+//1.删除有序链表中重复的元素，使得各元素互异
 
 void Delete_LinkList_Same(LinkList L)
 {
@@ -205,7 +213,7 @@ void Delete_LinkList_Same(LinkList L)
 	
 }
 
-//将两个有序链表合并为一个新的有序链表
+//2.将两个有序链表合并为一个新的有序链表
 LinkList MergeorderList(LinkList L1,LinkList L2)
 {
 	LNode* p=L1->next;
@@ -251,3 +259,79 @@ LinkList MergeorderList(LinkList L1,LinkList L2)
 
 	return L;
 }
+//3.删除链表中最小值（假设链表中最小值唯一）
+void Del_Listmin(LinkList L)
+{
+	LNode* pre=L;
+	LNode* p=pre->next;
+
+	LNode* minpre=L;
+	LNode* minp=minpre->next;
+	
+	
+	while(p)
+	{
+		if(p->data<minp->data)
+		{
+			minp=p;
+			minpre=pre;
+			pre=p;
+			p=p->next;
+		}
+		else
+		{
+			pre=p;
+			p=p->next;
+		}
+	}
+	
+	minpre->next=minp->next;
+	free(minp);
+}
+
+//4.原地逆置单链表（头插法）
+void Reverse_List(LinkList L)
+{
+	LNode* r=L;
+	LNode* p=L->next;
+	L->next=NULL;//记得把头指针置空
+	while(p)
+	{
+		r=p->next;
+		p->next=L->next;
+		L->next=p;
+		p=r;
+	}
+}
+
+//4.原地逆置单链表（改变指针）
+void Reverse_List2(LinkList L)
+
+{
+	if(L->next)
+	{//当传入链表非空时
+		LNode* pre=L;
+		LNode* p=pre->next;
+		LNode* r=p->next;
+
+		if(r)//链表中不止一个元素的时候，也即r不为空的时候
+		{
+
+			while(r)
+			{
+				p->next=pre;
+				pre=p;
+				p=r;
+				r=r->next;
+			}
+	//由于上面while代码块处理完后链表中还有最后一个结点没有处理
+			L->next->next=NULL;//头结点的next置空
+			p->next=pre;//处理最后一个结点
+			L->next=p;//让头结点指向链表最后一个结点
+		}//如果链表中只有一个元素则什么也不做
+	}
+	else
+		printf("所输入链表为空\n");
+}
+
+
