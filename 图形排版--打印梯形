@@ -1,0 +1,49 @@
+>题目要求
+输入n，第一层有n个"*"并且总层数为n.每层比下一层少两个"*"
+
+例如：
+
+输入： 4
+
+输出 ：
+      ****
+    ******
+  ********
+**********
+
+
+代码实现：
+
+
+
+
+#include <stdio.h>
+
+
+int main()
+{
+  int h;
+  while(scanf("%d",&h)!=EOF)
+  {
+    int row=h;
+    int col=h+2*(h-1);
+    for(int i=0;i<row;++i)
+    {
+      for(int j=0;j<col;++j)
+      {
+        if(col<(col-(h+2*i))
+        {
+          printf(" ");
+        }
+        else
+        {
+          printf("*");
+        }
+      }
+      printf("\n");
+    }
+    printf("\n");
+  }
+  
+  return 0;
+}
