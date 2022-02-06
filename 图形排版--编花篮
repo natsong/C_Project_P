@@ -1,0 +1,68 @@
+
+#include <stdio.h>
+
+//1.正方形左上角坐标为(i,i)i从0开始，右下角坐标为（j,j）
+//2.由于各个正方形是同心正方形，因此满足i+j=n-1,即 j=n-1-i
+//3.每条边的边长为j-i+1，也可以表示为n-2*i
+//4.正方形的边用什么花色填充取决于距离中心距离的奇偶，如果是奇数则用outside
+//  花色填充，否则用center填充。边距离中心的距离可以表示为(i+j)/2
+int main()
+{
+    const int MAX=80+10;
+    
+    char Sq[MAX][MAX];
+    
+    int n;
+    char center;//中心花色
+    char outside;//另一种花色
+    while(scanf("%d %c %c",&n,&center,&outside)!=EOF)
+    {
+        for(int i=0;i <= n/2;++i)
+        {
+            int j= n-1-i;//j范围确定
+            int length=n-2*i;//正方形边长
+            
+            char current;
+            
+            if((n/2-i)%2==0)
+            {
+                current=center;
+            }
+            else
+            {
+                current=outside;
+            }
+            
+                    //开始填充正方形边
+            for(int k=0;k<length;k++)
+            {
+              Sq[i][i+k]=current;//填充上边
+              Sq[i+k][i]=current;//填充左边
+              Sq[j][j-k]=current;//填充下边
+              Sq[j-k][j]=current;
+            }
+            
+        }
+        
+        //当边长大于1的时候剔除四个边角
+        if(n>1)
+        {
+            Sq[0][0]=' ';
+            Sq[0][n-1]=' ';
+            Sq[n-1][0]=' ';
+            Sq[n-1][n-1]=' ';
+        }
+        for(int i=0;i<n;++i)
+        {
+            for(int j=0;j<n;++j)
+            {
+                printf("%c",Sq[i][j]);
+            }
+            printf("\n");
+        }
+
+        
+    }  
+    
+    return 0;    
+}
