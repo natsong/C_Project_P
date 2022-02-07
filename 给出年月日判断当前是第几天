@@ -1,0 +1,38 @@
+#include <stdio.h>
+
+int IsLeapYear(int year)
+{
+    if((year%4==0 && year%100!=0)||year%400==0)
+    {
+        return 1;
+    }else
+    {
+        return 0;
+    }
+}
+
+int main()
+{
+    int daytable[2][13]=
+    {
+        {0,31,28,31,30,31,30,31,31,30,31,30,31},
+        {0,31,28,31,30,31,30,31,31,30,31,30,31}
+    };
+    
+    int row;
+    int year,month,day;
+    while(scanf("%d %d %d",&year,&month,&day)!=EOF)
+    {
+        int number=0;
+        row=IsLeapYear(year);
+        for(int i=0;i<month;++i)
+        {
+            number+=daytable[row][i];
+        }
+        number+=day;
+        
+        printf("%d",number);
+    }
+    
+    return 0;
+}
