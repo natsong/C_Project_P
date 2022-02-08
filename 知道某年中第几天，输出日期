@@ -1,0 +1,50 @@
+
+//输入 年份 和 第几天，输出这是这一年的日期，日期格式为yyyy-mm-dd
+
+//控制打印位数可以利用printf控制
+//pirntf("%04d-%02d-%02e");表示打印n位不足补0
+
+//代码实现
+
+#include <stdio.h>
+
+int IsLeapYear(int year)
+{
+  if((year%4==0 && year%100!=0)||year%400==0)
+  {
+    return 1;
+  }
+  else
+  {
+    return 0;
+  }
+}
+
+int main()
+{
+  
+  char daytable[2][13]=
+  {
+    {0,31,28,31,30,31,30,31,31,30,31,30,31},
+    {0,31,29,31,30,31,30,31,31,30,31,30,31}
+  };
+  
+  int year,month,day;
+  int number=0;
+  while(scanf("%d %d",&year,&number)!=EOF)
+  {
+    int row=IsLeapYear(year);
+    month=0;
+    while(number>daytable[row][month])
+    {
+      number-=daytable[row][month];
+      month++;
+    }
+    day=number;
+    
+    printf("%04d-%02d-%02d\n",year,month,day);
+  }
+  
+  return 0;
+}
+
