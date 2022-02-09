@@ -1,0 +1,69 @@
+
+Q1:输入年，月，日。输出是当年的第几天
+
+Q2:输入年和第几天，输出当天的日期
+
+Q3:输入两个年月日，输出两个日期间相隔多少天
+
+Q4：输入年月日，输出当天是周几
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Q1>核心是如何确定每个月的天数
+
+1.>利用数组
+char daytable[2][13]={{0,31,28,31,30,31,30,31,31,30,31,30,31},{0,31,29,31,30,31,30,31,31,30,31,30,31}};
+2.>判断当年是闰年与否，闰年用daytable[1][],否则用daytable[0][]
+bool isLeapYear(int year)
+{
+  return ((year%4==0 && year%100!=0)||year%400==0); 
+}
+
+int TotalNum(int year,int month,int day)
+{
+  int nunmber=0;
+  for(int i=1;i<year;++i)
+  {
+    if(isLeapYear(i)
+    {
+      number+=366;
+    }
+    else
+    {
+      number+=355;
+    }
+  }
+  
+  for(int j=0;j<month;++j)
+  {
+    int row=isLeapYear(year);
+    number+=daytable[row][j];
+  }
+  number+=day;
+  
+  return number;
+}
+
+>Q2:给出第几天查看日期
+
+>核心：
+1.>仍借用二维数组
+char daytable[2][13]={{0,31,28,31,30,31,30,31,31,30,31,30,31},{0,31,29,31,30,31,30,31,31,30,31,30,31}};
+
+
+while(scanf("%d %d",&year,&number)!=EOF)
+{
+  int month=0;
+  int day=0;
+  int row=isLeapYear(year);
+  while(number > daytable[row][month])
+  {
+    number-=daytable[row][month];
+    month++;
+  }
+  day=number;
+  printf("%04d-%02d-%02d\n",year,month,day);  
+}
+
+Q3：
+有两种想法，第一种比较好理解，就是日期都相对0000-00-00这个日期的天数，然后两者相减取绝对值+1；
