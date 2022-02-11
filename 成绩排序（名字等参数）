@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+typedef struct student
+{
+    char name[30];
+    int age;
+    int score;
+}STUDENT;
+
+int cmp_stu(const void* p1,const void* p2)
+{
+    if(((STUDENT*)p1)->score ==((STUDENT*)p2)->score)
+    {
+        if(strcmp( ((STUDENT*)p1)->name,((STUDENT*)p2)->name)==0)
+        {
+          return ((STUDENT*)p1)->age- ((STUDENT*)p2)->age;
+        }
+        else
+        {
+          return strcmp( ((STUDENT*)p1)->name,((STUDENT*)p2)->name);  
+        }
+    }
+    else
+    {
+        return ((STUDENT*)p1)->score - ((STUDENT*)p2)->score;
+    }
+}
+
+int main()
+{
+    int n;
+    while(scanf("%d\n",&n)!=EOF)
+    {
+        STUDENT stu[n];
+        for(int i=0;i<n;++i)
+        {
+            scanf("%s %d %d\n",stu[i].name,&stu[i].age,&stu[i].score);
+        }
+        
+        qsort(stu,n,sizeof(STUDENT),cmp_stu);
+        
+        for(int i=0;i<n;++i)
+        {
+            printf("%s %d %d\n",stu[i].name,stu[i].age,stu[i].score);
+        }
+        
+    }
+    return 0;
+}
