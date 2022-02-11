@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define NAME_MAX 30 
+
+
+typedef struct student
+{
+    char name[NAME_MAX];
+    int score;
+    int order;
+}STUDENT;
+
+
+int cmp_struct_in(const void* p1,const void *p2)
+{
+    if( ((STUDENT*)p1)->score ==  ((STUDENT*)p2)->score )
+    {
+        return  ((STUDENT*)p1)->order - ((STUDENT*)p2)->order ;
+    }
+    else
+    {
+        return ((STUDENT*)p1)->score - ((STUDENT*)p2)->score ;
+    }
+}
+
+int cmp_struct_de(const void* p1,const void *p2)
+{
+    if( ((STUDENT*)p1)->score ==  ((STUDENT*)p2)->score )
+    {
+        return  ((STUDENT*)p1)->order - ((STUDENT*)p2)->order ;
+    }
+    else
+    {
+        return ((STUDENT*)p2)->score - ((STUDENT*)p1)->score ;
+    }
+}
+
+int main()
+{
+    int n,type;
+    
+    
+    while(scanf("%d%d",&n,&type)!=EOF)
+    {
+        STUDENT stu[n];
+        for(int i=0;i<n;++i)
+        {
+            scanf("%s%d\n",stu[i].name,&stu[i].score);
+            stu[i].order=i;
+        }
+        
+        if(type==0)
+        {
+            qsort(stu,n,sizeof(STUDENT),cmp_struct_de);
+        }
+        else
+        {
+            qsort(stu,n,sizeof(STUDENT),cmp_struct_in); 
+        }
+       
+        for(int j=0;j<n;++j)
+        {
+            printf("%s %d\n",stu[j].name,stu[j].score);
+        }
+    }
+   
+    return 0;
+}
+
+
+
