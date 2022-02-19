@@ -1,0 +1,74 @@
+//题目需求：
+
+//https://www.nowcoder.com/practice/e3b2cc44aa9b4851bdca89dd79c53150?tpId=69&tqId=29675&tPage=2&ru=/kaoyan/retest/11002&qru=/ta/hust-kaoyan/question-ranking
+
+
+解题思路 ：
+ASCII码范围：
+0-9：48-57
+A-Z: 65-90
+a-z: 97-122
+1）设计结构体char_Eum,该结构体包含三个数据成员，int NUM表示字符串中出现该字符的个数，char ch,表示该字符，int pos[100]，pos用来存储该字符分别出现的位置，由于字符最多100个，因此设计数组大小100
+2）按照ASCII码值来对应下标，例如输入字符C时，由于C 的ASCII值为67，将该字符存在数组下标为67的位置。
+
+
+
+
+
+
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+
+typedef struct char_Eum
+{
+  char ch;
+  int NUM;
+  int pos[100];
+
+}char_Eum;
+
+//按照第一此出现位置排序
+int cmp_struct(const void* p1,const void* p2)
+{
+
+    return ((char_Eum*)p1)->pos[0] -((char_Eum*)p2)->pos[0];
+
+}
+
+
+
+int main()
+{
+  char_Eum ce[128];
+  memset(ce,0,sizeof(ce));
+  char C;
+  int order=0;
+  while(scanf("%c",&C)!=EOF)
+  {
+    ce[C].ch=C;
+    ce[C].pos[ce[C].NUM]=order;
+    ce[C].NUM++;
+    order++;
+  }
+  
+  qsort(ce,128,sizeof(char_Eum),cmp_struct);
+  
+  for(int i=0;i<128;i++)
+  {
+    if(ce[i].NUM >1)
+    {
+      for(int j=0;j<ce[i].NUM-1;++j)
+      {
+        printf("%c:%d,",c[i].ch,c[i].pos[j]);
+      }
+      printf("%c:%d",c[i].ch,c[i].pos[ce);
+    }
+  
+  }
+
+
+  return 0;
+}
