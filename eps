@@ -1,0 +1,32 @@
+//读入一个正实数eps，计算并输出1-1/3+1/5-1/7...,直到最后一项的绝对值小于eps
+
+#include <stdio.h>
+#include <math.h>
+
+int main()
+{
+    double eps,sum=1.0,fz=1.0,fm=1.0,temp;
+    
+    scanf("%lf",&eps);
+    
+    temp=fz/fm;
+    
+    while(fabs(temp)>=eps)
+    {
+        fz=-fz;
+        fm+=2;
+        temp=fz/fm;
+        sum+=temp;
+    }
+    
+    printf("%lf\n",sum);
+    printf("%lf",temp);
+    return 0;
+}
+
+结果：
+
+
+0.666667
+-0.333333
+
