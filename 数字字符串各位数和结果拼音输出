@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+	char str[100];				/*用于存储待输入的数字字符串*/
+	int sum=0;			        /*用于记录输入数字字符串各位的和*/
+	int x;							/*用于记录sum各位，方便与拼音的映射*/
+	int len=0;					/*用于记录sum的长度，方便遍历sum各位*/
+	char pinyin[10][5];			/*用于存储sum各位对应的拼音*/
+	scanf("%s",str);
+	for(int i=0;str[i]!='\0';++i)	/*遍历str并且将各位上的字符数字化后相加得到sum*/
+	{
+		 sum+=(str[i]-'0');
+	}
+
+	while(sum)	/*开始处理sum各位，将其每位对应的拼音存到数组pinyin 里面*/
+	{
+		x=sum%10; /*取sum最低位，准备映射拼音*/
+		switch(x)
+		{
+			case 0: strcpy(pinyin[len],"ling");		 break;
+			case 1: strcpy(pinyin[len],"yi"	 );	     break;
+			case 2: strcpy(pinyin[len],"er"  );		 break;
+			case 3: strcpy(pinyin[len],"san" );	     break;
+			case 4: strcpy(pinyin[len],"si"  );		 break;
+			case 5: strcpy(pinyin[len],"wu"	 );	     break;
+			case 6: strcpy(pinyin[len],"liu" );		 break;
+			case 7: strcpy(pinyin[len],"qi"	 );	     break;
+			case 8: strcpy(pinyin[len],"ba"  );		 break;
+			case 9: strcpy(pinyin[len],"jiu" );	     break;
+		}
+		len++;
+		sum/=10;
+	}
+/*以上通过swtich语句得到了len个对应的拼音，不过要注意，pinyin数组中顺序是从低到高的*/
+for(int j=len-1;j>0;j--)
+{
+	printf("%s ",pinyin[j]);
+}
+printf("%s",pinyin[0]);
+	return 0;
+}
+
+例1结果：
+
+输入:12345
+输出:yi wu
+
+例2结果：
+输入:1012
+输出:si
+
