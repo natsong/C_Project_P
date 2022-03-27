@@ -1,0 +1,56 @@
+#include <stdio.h>
+#inlcude <math.h>
+
+
+int isflower(int n)
+{
+   int temp=n;
+   int x=n%10;
+   n/=10;
+   int y=n%10;
+   n/=10;
+   int z=n%10;
+   if((pow(x,3)+pow(y,3)+pow(z,3))==temp)
+   {
+      return 1;
+   }
+   else
+   {
+      return 0;
+   }
+}
+
+void WriteflowertoFile()
+{
+    FILE *fp=NULL;
+    int count=0;
+    int flower[100];
+    for(int i=100;i<1000;++i)
+    {
+      if(isflower(i))
+      {
+        flower[count++]=i;//将所有的水仙花数存入到flower数组之中，接下来将flower数组中的元素按格式输入到指定文本中
+      }
+    }
+    if((fp=fopen("D:\\flower.txt","w"))==NULL)
+    {
+      printf("FILE OPEN FAILED");
+      exit(0);
+    }
+    else
+    {
+      for(int j=0;j<count;j++)
+      {
+        fprintf(fp,"%d\t",flower[j]);
+      }
+    }
+    
+    fclose(fp);
+
+}
+int main()
+{
+ WriteflowertoFile();
+}
+
+
