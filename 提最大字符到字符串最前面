@@ -1,0 +1,62 @@
+>例如：
+>输入:chyab
+>要求输出:ychab
+>若有多个最大字符，只需要提最前面的最大字符即可
+>例如：
+>输入：chyayb
+>要求输出： ychayb
+
+
+代码实现
+
+```c
+#include<stdio.h>
+#include<string.h>
+
+void getMax(char* str)
+{
+	char *p,*q,max;
+	p=str;
+	max=*(p++);
+	while(p!='\0')
+	{
+		if(max<*p)
+		{
+			max=*p;
+			q=p;/*用q来记录当前最大字符的位置*/
+		}
+		p++;
+	}
+	p=q;
+	while(p>str)
+	{
+		*p=*(p-1);
+		p--;
+	}
+	*p=max;
+	puts(p);
+
+}
+
+int main()
+{
+	char str[80];
+	gets(str);
+	getMax(str);
+	return 0;
+}
+```
+
+>输入：songyier
+
+输出结果如下
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/84d65ddfb16a4a26a117896d16df3733.png)
+
+
+>输入：yiersongz
+
+输出结果如下：
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/ceaaa368198249af924429a8453e1fd6.png)
+
