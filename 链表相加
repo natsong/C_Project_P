@@ -1,0 +1,43 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        //定义两个变量用来指示新建的链表。head表示结点，rear表示尾结点
+        ListNode head = null;
+        ListNode rear = null;
+        //carry记录进位情况
+        int carry = 0;
+        //循环遍历两个链表直至某个链表为空
+        while (l1 != null || l2 != null) {
+            //n1,n2 表示两个链表对应的结点值
+            int n1 = l1 != null ? l1.val : 0;
+            int n2 = l2 != null ? l2.val : 0;
+            int sum = n1 + n2 + carry;
+            if(head == null){
+                head = rear =new ListNode(sum % 10);
+            }else{
+                rear.next = new ListNode(sum %10);
+                rear = rear.next;
+            }
+            carry = sum / 10;
+            if (l1 != null) {
+                l1 = l1.next;
+            }
+            if (l2 != null) {
+                l2 = l2.next;
+            }
+        }
+        if (carry > 0) {
+            rear.next = new ListNode(1);
+        }
+        return head;
+    }
+}
