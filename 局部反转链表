@@ -1,0 +1,29 @@
+struct ListNode* reverseBetween(struct ListNode* head, int m, int n ) {
+    // write code here
+    if (head->next == NULL || head == NULL)
+        return head;
+    //新建头结点
+    struct ListNode* H = malloc(sizeof(struct ListNode));
+    H->next = head;
+    struct ListNode* p, *temp, *cur = H;
+    //定位反转区间
+    for (int i = 0; i < m - 1; i++) {
+        cur = cur->next;
+    }
+    temp = cur; //区间的头结点
+    struct ListNode* q;
+    cur = cur->next; //反转区间第一个节点
+    q = cur; //保存反转区间第一个节点
+    //头插法反转链表
+    for (int i = 0; i < n - m + 1; i++) {
+        p = cur;
+        cur = cur->next;
+        p->next = temp->next;
+        temp->next = p;
+    }
+    q->next = cur; //反转区间第一个节点与原链表反转区间后的第一个节点相连
+    return H->next;
+
+
+
+}
