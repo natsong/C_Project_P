@@ -1,0 +1,41 @@
+/**
+ * struct ListNode {
+ *  int val;
+ *  struct ListNode *next;
+ * };
+ */
+/**
+ * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+ *
+ *
+ * @param head ListNode类
+ * @param k int整型
+ * @return ListNode类
+ */
+struct ListNode* reverseKGroup(struct ListNode* head, int k )
+ {
+    // write code here
+    //找到每次翻转的尾部
+    struct ListNode* tail = head;
+    //遍历k次到尾部
+    for (int i = 0; i < k; i++) {
+        //如果不足k到了链表尾，直接返回，不翻转
+        if (tail == NULL)
+            return head;
+        tail = tail->next;
+    }
+    //翻转时需要的前序和当前节点
+    struct ListNode* pre = NULL;
+    struct ListNode* cur = head;
+    //在到达当前段尾节点前
+    while (cur != tail) {
+        //翻转
+    struct ListNode* temp = cur->next;
+        cur->next = pre;
+        pre = cur;
+        cur = temp;
+    }
+    //当前尾指向下一段要翻转的链表
+    head->next = reverseKGroup(tail, k);
+    return pre;
+}
