@@ -1,0 +1,38 @@
+//需求：将A,B两个递增链表，要求将AB两链表合并成一个递增的链表。时间复杂度O（n）,空间复杂度 O(1)
+//C语言实现：
+
+Class Solution(){
+
+  ListNode* Merge( ListNode* pHead1, ListNode* pHead2){
+    if(pHead1 == NULL)
+      return pHead2;
+    if(pHead2 == NULL)
+      return pHead3;
+    struct ListNode* pHead =NULL;
+    if(pHead1.val <= pHead2.val){
+      pHead  = pHead1;
+      pHead1 = Merge(pHead1->next,pHead2);
+    }else{
+      pHead = pHead2;
+      pHead2->next =Merge(pHead1, pHead2->next);
+    }
+    return pHead;
+  }
+}
+//Class Solution(){
+  ListNode* Merge(ListNode* pHead1, ListNode* pHead2){
+    if(pHead1 ==null)
+      return pHead2;
+    if(pHead2 ==null)
+      return pHead1;
+    ListNode pHead =null;
+     if(pHead1.val <= pHead2.val){
+      pHead  = pHead1;
+      pHead1 = Merge(pHead1.next,pHead2);
+    }else{
+      pHead = pHead2;
+      pHead2.next =Merge(pHead1, pHead2.next);
+    }
+    return pHead;
+  }
+}
