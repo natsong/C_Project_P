@@ -1,0 +1,52 @@
+/*
+要求：
+输入：
+"This is a sample",16
+返回值：
+"SAMPLE A IS tHIS"
+*/
+
+/**
+ *
+ * @param s string字符串
+ * @param n int整型
+ * @return string字符串
+ */
+void reverse(char* s, int left, int right) {
+    char temp;
+    while (left < right) {
+        temp = s[left];
+        s[left] = s[right];
+        s[right] = temp;
+        left++;
+        right--;
+    }
+}
+
+char* trans(char* s, int n ) {
+
+    reverse(s, 0, n - 1);
+    int i = 0;
+    int j = 0;
+    int len = 0;//定义一个
+    while (i < n) {
+        while(s[i] != ' ' && i < n){
+
+            if(s[i] >= 'A' && s[i]<= 'Z'){
+                s[i] -= 'A' - 'a';
+            }
+            else if(s[i] >= 'a' && s[i] <='z'){
+                s[i] += 'A' - 'a';
+            }
+            i++;
+            len++;
+        }
+        reverse(s, i - len , i-1);
+        len = 0;
+        i++;
+        
+    }
+
+    return s;
+
+}
