@@ -1,0 +1,54 @@
+struct ListNode* Mergelist(struct ListNode* list1, struct ListNode* list2) {
+    if (list1 == NULL)
+        return list2;
+    if (list2 == NULL)
+        return list1;
+    //让p指向首节点较小的链表，让q指向首节点较大的链表
+    struct ListNode* p = list1->val <= list2->val ? list1 : list2;
+    struct ListNode* q = list1->val <= list2->val ? list2 : list1;
+    struct ListNode* ret =p;//
+    while(p && q){
+        struct ListNode* temp;
+        if(p->next && p->next->val <= q->val){
+            p = p->next;
+        }else{
+            temp =p->next;
+            p->next = q;
+            p = q;
+            q = temp;
+        }
+    }
+    return ret;
+}
+
+struct ListNode* mergeKLists(struct ListNode** lists, int listsLen ) {
+    // write code here
+    struct ListNode * ret;
+    struct ListNode *temp;
+    struct ListNode *arr[listsLen];
+    int  li = 0;
+    int lock =0;
+     while(listsLen > 1){
+        if(listsLen % 2 != 0){
+            temp = lists[listsLen-1];
+            listsLen--;
+            lock = 1;
+        }
+        else
+            lock = 0;
+         
+        for (int i = 0; i < listsLen; i+=2) {
+            lists[li] = Mergelist(lists[i], lists[i+1]);
+            li += 1;
+        }
+        if(lock == 1){
+            lists[li] = temp;
+            li += 1;
+        }
+         
+        listsLen = li;
+        li = 0;
+    }
+    return lists[0];
+
+}
