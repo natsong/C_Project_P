@@ -1,0 +1,25 @@
+原理：定义两个指针，刚开始两个指针slow,fast。最初都指向head 头结点，slow每次移动一个结点位置，fast每次移动两个结点位置
+由于当链表中有环的时候fast指针会先在环中不断循环吗，当链表中没有环的时候 fast指针会指空，由于fast指针连续移动两步，因此需要连续两次判空。
+当链表中有环的时候，fast指针再环中循环后，slow指针迟早会进入环中一起循环，由于两个指针的移动速度不同，因此两个指针迟早会在环中相遇，即 fast == slow，此时可以跳出循环
+
+具体实现：
+
+
+code:
+
+bool hasCycle(struct ListNode* head ) {
+    // write code here
+    if (head == NULL || head->next == NULL) {
+        return false;
+    }
+    struct ListNode* slow = head;
+    struct ListNode* fast = head;
+    while (fast != NULL && fast->next != NULL) {
+        slow = slow ->next;
+        fast = fast->next->next;
+        if (slow == fast) return true;
+
+    }
+    return false;
+
+}
