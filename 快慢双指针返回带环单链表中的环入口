@@ -1,0 +1,19 @@
+利用快慢双指针来返回环的入口，原理是，快指针速度始终是慢指针移动速度的两倍。
+经过分析，相遇点到达入口的距离刚好是头结点到入口的距离相等。
+可以先在相遇后，将fast指针重新指向头结点。然后fast和slow指针相同速度移动，当相遇时，二者所指的结点即为环的入口结点。
+
+代码主体
+
+while(fast != NULL && fast->next !=NULL){
+    slow = slow ->next;
+    fast = fast ->next->next;
+    if(fast == slow) break;
+}
+if( fast == NULL || fast->next == NULL) return NULL;
+
+fast = Phead;
+while(fast != slow){
+  slow = slow ->next;
+  fast = fast ->next;
+}
+return fast;
